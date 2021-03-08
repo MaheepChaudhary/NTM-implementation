@@ -15,6 +15,8 @@ def _roll_out(leng,n_shifts): #not clear
     shifts = range(n_shifts//2,-n_shifts//2,-1)
     C = np.asarray([np.roll(eye,s,axis = 
 '''
+#m_depth is the number of rows/elements in a memory block
+#n_slots is the number of memory blocks 
 
 def renorm(s):
     return s/K.sum(s,axis = 1,keepdims = True)
@@ -22,12 +24,14 @@ def renorm(s):
 def cosine_similarity(K,M):
     return cosine_similarity(K,M)
 
-def controller_read_ouput_dim(shift_range,input_dim):
-
+def controller_read_ouput_dim(m_depth,shift_range):
     beta,k,g,sharpness = 1,1,1,1
     shift = shift_range #not clear
-    return (input_dim+k+beta+g+shift+sharpness)
+    return (m_depth+k+beta+g+shift+sharpness) #m_depth consist of the weights of the weight that will be multiplied with memory
 
-def controller_write_output_dim(input_):
+def controller_write_output_dim(m_depth):
+    controller_read_dim = controller_read_output_dim(m_depth,shift_range)
+    return controller_read_dim + 2*m_depth #erase and add vector to be included
 
-
+def controller_input_output_dim(output_dim,read_head,write_head,n_slots):
+    output_dim_controller_dim = 
