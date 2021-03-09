@@ -45,4 +45,25 @@ def controller_input_output_dim(input_dim,output_dim,read_head,write_head,m_dept
 
 def NeuralTuringMachine(RNN):
 
-    def __init__(self,):
+    def __init__(self,units,
+                      n_slots = 50, #number of columns
+                      m_depth = 20, #number of rows
+                      shift_range = 3,
+                      read_head = 1,
+                      write_head = 1,
+                      controller_model = None,
+                      batch_size = 777,
+                      stateful = False,
+                      **kwargs):
+        self.output_dim = units
+        self.units = units
+        self.read_head = read_head
+        self.write_head = write_head 
+        self.controller = controller_model
+        self.n_slots = n_slots
+        self.m_depth = m_depth
+        self.shift_range = shift_range
+        self.batch_size = batch_size
+
+        try:
+            
