@@ -10,6 +10,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 '''
 def _roll_out(leng,n_shifts): #not clear
+'''
+'''
 
     eye = np.eye(leng)
     shifts = range(n_shifts//2,-n_shifts//2,-1)
@@ -43,7 +45,7 @@ def controller_input_output_dim(input_dim,output_dim,read_head,write_head,m_dept
 
     return output_dim_controller, input_dim_controller
 
-def NeuralTuringMachine(RNN):
+class NeuralTuringMachine(RNN):
 
     def __init__(self,units,
                       n_slots = 50, #number of columns
@@ -65,5 +67,19 @@ def NeuralTuringMachine(RNN):
         self.shift_range = shift_range
         self.batch_size = batch_size
 
+        '''
         try:
-            
+           
+
+
+        except:
+        '''
+
+    self.controller_read_output_dim = controller_read_output_dim(m_depth,shift_range)
+    self.controller_write_output_dim = controller_write_ouptut_dim(m_depth)
+    
+    super().__init__()
+
+    def build(self,input_shape):
+        
+    
