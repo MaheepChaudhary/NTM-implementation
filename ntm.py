@@ -33,5 +33,16 @@ def controller_write_output_dim(m_depth):
     controller_read_dim = controller_read_output_dim(m_depth,shift_range)
     return controller_read_dim + 2*m_depth #erase and add vector to be included
 
-def controller_input_output_dim(output_dim,read_head,write_head,n_slots):
-    output_dim_controller_dim = 
+def controller_input_output_dim(input_dim,output_dim,read_head,write_head,m_depth):
+
+    read_controller_output_dim = controller_read_output_dim
+    write_controller_outptut_dim = controller_write_output_dim
+    output_controller_dim = (output_dim + write_heads*write_controller_output_dim \
+            + read_head*read_controller_output_dim)
+    input_controller_dim = input_dim + read_head*m_depth
+
+    return output_dim_controller, input_dim_controller
+
+def NeuralTuringMachine(RNN):
+
+    def __init__(self,):
