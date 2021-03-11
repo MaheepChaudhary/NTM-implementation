@@ -48,8 +48,8 @@ def controller_input_output_dim(input_dim,output_dim,read_head,write_head,m_dept
 class NeuralTuringMachine(RNN):
 
     def __init__(self,units,
-                      n_slots = 50, #number of columns
-                      m_depth = 20, #number of rows
+                      n_slots = 50, #number of columns, containing a feature 
+                      m_depth = 20, #number of rows, containing a elements of the feature
                       shift_range = 3,
                       read_head = 1,
                       write_head = 1,
@@ -79,7 +79,30 @@ class NeuralTuringMachine(RNN):
     self.controller_write_output_dim = controller_write_ouptut_dim(m_depth)
     
     super().__init__()
-
+'''
     def build(self,input_shape):
         
-    
+   
+
+
+
+'''
+
+    def get_intial_state():
+        
+       # init_old_ntm_output = K.ones((self.batch_size, self.ouptut_dim),name = "init_old_ntm_output")*0.42
+       # init_M = K.ones((self.batch_size,self.n_slots,self.m_depth),name = "main_menmory")*0.042
+        init_wr = np.zeros((self.batch_size,self.read_heads,self.n_slots))
+       # init_wr[:,:,0] = 1
+        init_wr = K.variable(init_wr,bane = "init_weights_read")
+        init_ww = np.zeros((self.batch_Size,self.write_heads,self.n_slots))
+       # init_ww[:,:,0] = 1
+        init_ww = K.variable(init_ww,name = "init_weights_write")
+        
+        return [init_old_ntm_output,init_M,init_wr,init_ww]
+
+    def read_from_memory(self,weights):
+        return K.sum((weights[:,:,None]*M),axis = 1)
+
+    def write_to_memory(self,weights):
+        return 
