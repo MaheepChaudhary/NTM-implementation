@@ -104,5 +104,16 @@ class NeuralTuringMachine(RNN):
     def read_from_memory(self,weights):
         return K.sum((weights[:,:,None]*M),axis = 1)
 
-    def write_to_memory(self,weights):
-        return 
+    def write_to_memory_erase(self,weights,erase_wt,M):
+        M_tilda =  M*(1 - weights[:,:,None]*erase_wt[:,None,:])
+        return M_tilda
+    #What is the dimension of the erase vector?
+
+    def write_to_memeory_add(self,weights,add_wt,M):
+        return M_tilda + (weights[:,:None]*add_wt[:,None,:])
+   
+   def get_weight_vector(self,M,w_prev,k,beta,g,shift,gamma):
+       num = beta*cosine_similarity(k,M)
+       w_c = softmax(num)
+       
+
