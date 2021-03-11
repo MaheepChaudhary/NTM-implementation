@@ -115,5 +115,26 @@ class NeuralTuringMachine(RNN):
    def get_weight_vector(self,M,w_prev,k,beta,g,shift,gamma):
        num = beta*cosine_similarity(k,M)
        w_c = softmax(num)
+       w_g = g*w_c + (1-g)*w_prev
+       '''
+       C_s =
+       w_tilda = 
+       '''
+       w_out = renorm(w_tilda**gamma)
        
+       return w_out
 
+   '''
+   def run_controller(self,):
+
+
+
+
+
+
+
+
+   '''
+   def split_and_apply_activations(self,controller_output):
+
+        
