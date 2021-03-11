@@ -137,4 +137,14 @@ class NeuralTuringMachine(RNN):
    '''
    def split_and_apply_activations(self,controller_output):
 
-        
+      ntm_output,controller_instructions_read,controller_instructions_write = tf.split(\
+              controller_output,np.asarray([self.output_dim,
+                                            self.read_head*self.controller_read_output_dim,
+                                            self.write_head*self.controller_write_output_dim]),axis = 1)
+
+       controller_instructions_read = tf.split(controller_instructions_read,self.read_head,axis = 1)
+       controller_instructions_read = [tf.split(x,np.asarray([self.m_depth,1,1,1,3,1]),axis = 1) for x in controller_instructions_read]
+
+       controller_instructions_write = tf.split(controller_instructions_write,self.write_heads,axis = 1)
+
+       controller_instructions_write = [tf.split(y,np.asarray([self.m_depth,1,1,1,3,1,self.m_depth.self.m_depth]),axis = 1) for x in controller_instructions_write]
