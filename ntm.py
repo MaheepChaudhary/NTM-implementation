@@ -148,3 +148,23 @@ class NeuralTuringMachine(RNN):
        controller_instructions_write = tf.split(controller_instructions_write,self.write_heads,axis = 1)
 
        controller_instructions_write = [tf.split(y,np.asarray([self.m_depth,1,1,1,3,1,self.m_depth.self.m_depth]),axis = 1) for x in controller_instructions_write]
+      '''  
+      ntm_output = get_activation(ntm_output)
+      controller_instructions_read = [(tanh(k), hard_sigmoid(beta)+0.5, sigmoid(g), softmax(shift), 1 + 9*sigmoid(gamma)) for
+                (k, beta, g, shift, gamma) in controller_instructions_read]
+      controller_instructions_write = [
+                (tanh(k), hard_sigmoid(beta)+0.5, sigmoid(g), softmax(shift), 1 + 9*sigmoid(gamma), hard_sigmoid(erase_vector), tanh(add_vector))  for 
+                (k, beta, g, shift, gamma, erase_vector, add_vector) in controller_instructions_write]
+       
+      return (ntm_output, controller_instructions_read, controller_instructions_write)
+      '''    
+
+    '''
+    @property
+    def output_shape(self):
+    '''
+
+
+    def step(self):
+
+  
