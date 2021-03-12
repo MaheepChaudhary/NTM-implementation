@@ -164,7 +164,7 @@ class NeuralTuringMachine(RNN):
     def output_shape(self):
     '''
 
-
+#step ka use kahan hoga coz it's not called anywhere and it does not have property like the function call which gets called automatically
     def step(self,layer_output,states):
        _,M,weights_read_tm1,weights_write_tm1 =  states[:4]
 
