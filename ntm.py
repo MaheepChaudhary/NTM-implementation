@@ -165,6 +165,39 @@ class NeuralTuringMachine(RNN):
     '''
 
 
-    def step(self):
+    def step(self,layer_output,states):
+       _,M,weights_read_tm1,weights_write_tm1 =  states[:4]
 
-  
+       weights_read_tm1 = K.reshape(weights_read_tm1,(self.batch_size,self.read_head,self.n_slots))
+       weights_write_tm1 = K.reshape(weights_write_tm1,(self.batch_size,self.write_head,self.n_slots))
+
+       memory_read_input = K.concatenate([self.read_from_memory(M,weights_read_tm1[:,i]) for i in range(self.read_head)])
+       
+       controller_output = self.run_controller(layer_input,memory_read_input)
+
+       ntm_output, controller_instructions_read, controller_instructions_write = self.split_and_apply_activations(controller_output)
+
+       weights_write = []
+
+       for i in range(slef.write_head):
+           write_head = controller_instructions_write[i]
+           old_weight_vector = weights_write_tm1[:,i]
+           weight_vector = self.get_weight_vector(M, old_weight_vector, *tuple(write_head[:5]))
+       weights_write.append(weight_vector)
+
+       for i in range(self.write_heads):
+           M = self.write_to_memory_erase(M,weights_write[i],controller_instructions_write[i][5])
+    
+       for i in range(self.write_heads):
+           M = self.write_to_memory_add(M,weights_write[i],controller_instructions_write[i][6])
+
+       weights_read = []
+       for i in range(self.read_heads):
+           read_head = controller_instructions_read[i]
+           old_weight_vector = weights_read_tm1[:,i]
+           weight_vector = self.get_weight_vector(M,old_weight_vector,*read_heads)
+           weights_read.append(weight_vector)
+
+       return ntm_output, [ntm_output,M,K.stack(weigths_read,axis = 1),K.stack(weights_write,axis = 1)]
+
+        
